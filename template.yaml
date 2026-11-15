@@ -10,8 +10,8 @@ Parameters:
     Description: Arn for torguapi layer (not a layer version, so exclude the version number)
   TorguapiLayerVersion:
     Type: Number
-    Description: Version number for TorgupaiLayer
-    MinValue: "3"
+    Description: Version number for TorguapiLayer (11 or later, for the page-parameter ValueError fix)
+    MinValue: "11"
   EnvPrefix:
     Type: String
     Description: Prefix for resource names

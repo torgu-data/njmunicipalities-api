@@ -441,3 +441,38 @@ def test_process_municipality_params_5(apigw_event_get_municipalities):
     )
     assert HTTPStatus.BAD_REQUEST == status
     assert message is not None
+
+
+# isnumeric() passes these, but int() raises ValueError; layer v11 (torguapi
+# 0.3.1) turns that into TorguapiInvalidRequest, so they are a 400, not a 500
+UNPARSEABLE_PAGE_PARAMS = [
+    {"page_size": "²"},
+    {"page_number": "²"},
+    {"page_size": "9" * 5000},
+    {"page_number": "9" * 5000},
+]
+
+
+@pytest.mark.parametrize("query", UNPARSEABLE_PAGE_PARAMS)
+def test_process_municipality_params_unparseable_page(
+    apigw_event_get_municipalities, query
+):
+    """process_municipality_params with page values int() can't parse"""
+    apigw_event_get_municipalities["pathParameters"] = {"year": "2011"}
+    apigw_event_get_municipalities["queryStringParameters"] = query
+    status, message, params = municipalities_api.process_municipality_params(
+        apigw_event_get_municipalities
+    )
+    assert HTTPStatus.BAD_REQUEST == status
+    assert message is not None
+
+
+@pytest.mark.parametrize("query", UNPARSEABLE_PAGE_PARAMS)
+def test_process_xref_params_unparseable_page(apigw_event_get_xrefs, query):
+    """process_xref_params with page values int() can't parse"""
+    apigw_event_get_xrefs["queryStringParameters"] = query
+    status, message, params = municipalities_api.process_xref_params(
+        apigw_event_get_xrefs
+    )
+    assert HTTPStatus.BAD_REQUEST == status
+    assert message is not None

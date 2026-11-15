@@ -246,3 +246,22 @@ def test_process_counties_params_4(apigw_event_bad_pagination):
     )
     assert HTTPStatus.BAD_REQUEST == status
     assert message is not None
+
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        {"page_size": "²"},
+        {"page_number": "²"},
+        {"page_size": "9" * 5000},
+        {"page_number": "9" * 5000},
+    ],
+)
+def test_process_counties_params_unparseable_page(apigw_event_get_counties_base, query):
+    """process_counties_params with page values int() can't parse (layer v11)"""
+    apigw_event_get_counties_base["queryStringParameters"] = query
+    status, message, params = counties_api.process_counties_params(
+        apigw_event_get_counties_base
+    )
+    assert HTTPStatus.BAD_REQUEST == status
+    assert message is not None
