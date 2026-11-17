@@ -3,7 +3,7 @@
 #
 # Usage: Rscript scripts/export_data.R <git-ref> [out-dir]
 #
-# Installs tor-gu/njmunicipalities at <git-ref> (e.g. v1.3.0) into a temporary
+# Installs torgu-data/njmunicipalities at <git-ref> (e.g. v1.3.0) into a temporary
 # library, and writes counties.csv, municipalities.csv and SOURCE
 # to out-dir (default: data).
 
@@ -17,7 +17,7 @@ out_dir <- if (length(args) == 2) args[[2]] else "data"
 lib <- file.path(tempdir(), "njmunicipalities-lib")
 dir.create(lib, showWarnings = FALSE)
 remotes::install_github(
-  "tor-gu/njmunicipalities",
+  "torgu-data/njmunicipalities",
   ref = ref, lib = lib, upgrade = "never", dependencies = FALSE, quiet = TRUE
 )
 desc <- packageDescription("njmunicipalities", lib.loc = lib)

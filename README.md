@@ -9,7 +9,7 @@ county in NJ, from 2000 to 2026, and records the changes from year to
 year.
 
 See the related [njmunicipalities data package for
-R](https://github.com/tor-gu/njmunicipalities) for more details on the
+R](https://github.com/torgu-data/njmunicipalities) for more details on the
 underlying dataset.
 
 ## Try it out
@@ -115,11 +115,11 @@ DynamoDB tables managed separately by
 [Terraform](https://www.terraform.io/). A deployment has four parts:
 
 1.  The lambda layer
-    [layer_torguapi](https://github.com/tor-gu/layer_torguapi), which
+    [layer_torguapi](https://github.com/torgu-data/layer_torguapi), which
     needs to be deployed separately.
 2.  The DynamoDB tables, defined in `infra/`.
 3.  The data: CSV exports of the tables in
-    [njmunicipalities](https://github.com/tor-gu/njmunicipalities),
+    [njmunicipalities](https://github.com/torgu-data/njmunicipalities),
     committed in `data/` and loaded into the tables by
     `scripts/load_data.py`.
 4.  The lambdas and API Gateway, defined in `template.yaml`.
@@ -194,7 +194,7 @@ Replace the `TorguapiLayerXXX` params with the values derived from the
 The `ApiRoot` value is used only for generating the values in `"links"`
 in the JSON reply. On `api.tor-gu.com`, the relationship between the
 publicly facing API URL and the API Gateway endpoints is configured in
-[torgu-api-cloudfront](https://github.com/tor-gu/torgu-api-cloudfront).
+[torgu-api-cloudfront](https://github.com/torgu-data/torgu-api-cloudfront).
 
 To deploy a second environment alongside the first, give it a resource
 name prefix (I use `dev-`): set `EnvPrefix` in the template parameters,
