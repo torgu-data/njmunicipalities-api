@@ -1,5 +1,5 @@
-project     = "njmunicipalities-api"
-github_repo = "tor-gu/njmunicipalities-api"
+project               = "njmunicipalities-api"
+github_subject_prefix = "repo:torgu-data@357626211/njmunicipalities-api@545541461"
 
 envs = {
   dev = {
